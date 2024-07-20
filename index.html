@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content, viewport-fit=cover" />
+	<meta name="robots" content="all" />
+	<meta name="referrer" content="no-referrer" />
+	<meta name="author" content="Benjamin Aster" />
+	<meta name="description" content="An AI chatbot in the Chrome DevTools JavaScript console." />
+	<meta property="og:image" content="https://benjaminaster.com/devtools-chatbot/assets/screenshot.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="code-repository" href="https://github.com/BenjaminAster/devtools-chatbot" />
+	<link rel="canonical" href="https://benjaminaster.com/devtools-chatbot/" />
+
+	<title>DevTools Chatbot</title>
+	<link rel="icon" href="./assets/icon.svg" type="image/svg+xml" sizes="any" />
+	<link rel="aster:icon-dark" href="./assets/icon-dark.svg" />
+	<link rel="icon" href="./assets/icon.png" type="image/png" media="not (prefers-color-scheme: light)" sizes="512x512" />
+	<link rel="icon" href="./assets/icon-light.png" type="image/png" media="(prefers-color-scheme: light)" sizes="512x512" />
+	<meta name="color-scheme" content="dark light" />
+	<!-- <meta name="theme-color" content="#111" /> -->
+	<!-- <link rel="manifest" href="./app.webmanifest" /> -->
+
+	<!-- <link rel="stylesheet" href="./main.css" /> -->
+
+	<script type="module" src="./main.js"></script>
+
+	<link rel="preload" as="fetch" crossorigin href="./data/english-words.txt" />
+	<link rel="preload" as="fetch" crossorigin href="./assets/star-icon.svg" />
+
+	<style>
+		:root {
+			color-scheme: dark light;
+			font-family: system-ui, sans-serif;
+			font-size-adjust: cap-height from-font;
+			overflow-wrap: break-word;
+			line-height: 1.5;
+			scrollbar-color: light-dark(#ddd, #444) transparent;
+			scrollbar-width: thin;
+			background-color: Canvas;
+			touch-action: manipulation;
+			interpolate-size: allow-keywords;
+			-webkit-text-size-adjust: none;
+			text-size-adjust: none;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		body {
+			display: flow-root;
+			box-sizing: border-box;
+			min-block-size: 100dvb;
+			margin: 0;
+			padding: 1rem;
+		}
+
+		ol {
+			padding-inline-start: 3ch;
+		}
+
+		li {
+			line-height: 1.3;
+			margin-block-end: .3lh;
+		}
+
+		#prompt-api-availability > * {
+			border: 1px solid currentColor;
+			padding: .3em .6em;
+		}
+
+		.error {
+			color: color-mix(in srgb, red, CanvasText 30%);
+		}
+
+		.success {
+			color: color-mix(in srgb, limegreen, CanvasText 40%);
+		}
+	</style>
+</head>
+
+<body>
+	<noscript>Please enable JavaScript to view this site. <hr /></noscript>
+
+	<h1>DevTools Chatbot</h1>
+
+	<p>An AI chatbot in the Chrome DevTools JavaScript console. Uses Chrome's experimental <a href="https://github.com/explainers-by-googlers/prompt-api#readme">Prompt API</a> (a.k.a. <a href="https://developer.chrome.com/docs/ai/built-in">Chrome Built-in AI</a>), which is a small Large Language Model like ChatGPT, built directly into the browser. <a href="https://github.com/BenjaminAster/devtools-chatbot">View source code on GitHub</a>.</p>
+
+	<div id="prompt-api-availability">
+		<div hidden class="error" id="prompt-api-unavailable">Prompt API not available. Please follow the steps below to enable it.</div>
+		<div hidden class="error" id="model-unavailable">No ML model available. Please follow the steps below to enable it.</div>
+		<div hidden class="error" id="session-creation-failed">Failed to create AI text session.</div>
+		<div hidden class="success" id="everything-available">Prompt API with an ML model is available. Open the DevTools JavaScript console by pressing <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> and follow the instrucions there to start using the chatbot.</div>
+	</div>
+
+	<h3>How to enable the Prompt API with the Gemini Nano model:</h3>
+	<ol>
+		<li>Download and open the <a href="https://www.google.com/chrome/dev/">Google Chrome Developer Edition</a>. (<a href="https://www.google.com/chrome/canary/">Chrome Canary</a> worked unreliably for me, but generally should work too).</li>
+		<li>Visit <code>chrome://flags</code>.</li>
+		<li>Set "<strong>Prompt API for Gemini Nano</strong>" to "<strong>Enabled</strong>" and "<strong>Enables optimization guide on device</strong>" to "<strong>Enabled BypassPerfRequirement</strong>".</li>
+		<li>Restart Chrome.</li>
+		<li>Visit <code>chrome://components</code>.</li>
+		<li>If you see "<strong>Optimization Guide On Device Model</strong>" already listed there, you can jump to step 10.</li>
+		<li>Open the DevTools console by pressing <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd>.</li>
+		<li>Type <code>await ai.createTextSession()</code> into the console. This <a href="https://github.com/lightning-joyce/chromeai/issues/6#issuecomment-2228665617">seems to be</a> a weird hack to "force" Chrome into enabling the Built-in AI feature and somehow worked for me.</li>
+		<li>Restart Chrome again.</li>
+		<li>Assuming you see "<strong>Optimization Guide On Device Model</strong>" listed in <code>chrome://components</code>, click the "<strong>Check for updates</strong>" button beneath it and wait until the model has finished downloading. This will take a few minutes.</li>
+		<li>Restart Chrome yet again.</li>
+		<li>At this point, you should be all set.</li>
+	</ol>
+</body>
+
+</html>

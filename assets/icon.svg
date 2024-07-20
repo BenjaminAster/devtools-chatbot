@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
+	<style>
+		:root {
+			color-scheme: dark;
+			font-family: sans-serif;
+			--color: white;
+		}
+
+		@media (prefers-color-scheme: light) {
+			:root {
+				color-scheme: light;
+				--color: black;
+			}
+		}
+
+		#text {
+			font-size: 250px;
+			fill: var(--color);
+			font-weight: bold;
+			text-anchor: middle;
+			dominant-baseline: central;
+		}
+
+		#speech-bubble {
+			stroke: var(--color);
+			stroke-width: 30px;
+			stroke-linejoin: round;
+			fill: none;
+		}
+	</style>
+
+	<text id="text" x="240" y="180">&lt;/&gt;</text>
+
+	<path id="speech-bubble" d="
+		M 370 15
+		a 95 95 0 0 1 95 95
+		v 140
+		a 95 95 0 0 1 -95 95
+		h -110
+		a 150 150 0 0 1 -100 120
+		a 150 150 0 0 0 0 -120
+		L 110 345
+		a 95 95 0 0 1 -95 -95
+		v -140
+		a 95 95 0 0 1 95 -95
+		Z
+	" />
+</svg>
