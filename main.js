@@ -1,14 +1,16 @@
 
-if (!window.ai?.canCreateTextSession || !ai.createTextSession) {
+/// <reference path="./types.d.ts" />
+
+if (!window.ai?.assistant?.create) {
 	document.querySelector("#prompt-api-unavailable").hidden = false;
 	throw new Error("Prompt API not available");
 };
-if (await window.ai?.canCreateTextSession?.() !== "readily") {
+if ((await ai.assistant.capabilities?.())?.available !== "readily") {
 	document.querySelector("#model-unavailable").hidden = false;
 	throw new Error("Model not available")
 };
 
-const session = await ai.createTextSession({});
+const session = await ai.assistant.create({});
 
 if (!session) {
 	document.querySelector("#session-creation-failed").hidden = false;
